@@ -2,7 +2,7 @@ from qtpy.QtWidgets import QApplication, QMainWindow, QGridLayout, QWidget
 from partition1 import Partition1
 from partition2 import Partition2
 from partition3 import Partition3
-
+from partition4 import Partition4
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
         self.grid.addLayout(Partition1(), 0, 0)
         self.grid.addLayout(Partition2(), 0, 1)
         self.grid.addLayout(Partition3(), 0, 2)
+        self.grid.addLayout(Partition4(), 0, 3)
 
         # Create central widget and set grid layout
         self.central_widget = QWidget()

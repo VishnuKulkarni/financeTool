@@ -1,3 +1,4 @@
+from PyQt5.QtWidgets import QDialog
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
 
 class Partition1(QVBoxLayout):
@@ -13,25 +14,23 @@ class Partition1(QVBoxLayout):
 
         # Create button, checkbox, text input, dropdown menu, and text display area in partition
         self.button1 = QPushButton('Connect')
-        #self.button2 = QPushButton('BC List')
+        self.button1.clicked.connect(self.Connect)
+
         self.checkbox = QCheckBox('Checkbox')
         self.textinput = QLineEdit()
         self.dropdown = QComboBox()
         self.dropdown.addItems(self.GetBisiList())
         self.textdisplay = QTextEdit()
 
-        # Connect the clicked signal of the button to the dummy function
-        self.button1.clicked.connect(self.Connect)
-
         # Add button, checkbox, text input, dropdown menu, and text display area to partition layout
         self.addWidget(self.label)
         self.addWidget(self.button1)
-        #self.addWidget(self.button2)
         self.addWidget(self.checkbox)
         self.addWidget(self.textinput)
         self.addWidget(self.dropdown)
         self.addWidget(self.textdisplay)
         self.addWidget(self.frame)
+
 
     def Connect(self):
         #SAL : add connection code here. After success set 'Partition1.CONNECTED = True'
@@ -52,7 +51,8 @@ class Partition1(QVBoxLayout):
             bisilist = ['a1a','b1b','c1c'] #VK : default list when not connected to db. Think over it
         return bisilist
 
-
-
-
+    def get_input_text(self):
+        # Open the dialog and return the entered text
+        if self.exec_() == QDialog.Accepted:
+            return self.line_edit.text()
 
