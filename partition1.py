@@ -50,9 +50,3 @@ class Partition1(QVBoxLayout):
         else:
             bisilist = ['a1a','b1b','c1c'] #VK : default list when not connected to db. Think over it
         return bisilist
-
-    def get_input_text(self):
-        # Open the dialog and return the entered text
-        if self.exec_() == QDialog.Accepted:
-            return self.line_edit.text()
-
