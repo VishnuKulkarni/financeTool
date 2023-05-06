@@ -1,18 +1,22 @@
 from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
+
 
 class DBFunctions():
     # Set up the connection details for the Cassandra cluster
     cloud_config= {
-        'secure_connect_bundle': 'secure_connect_bundle.zip'
+        'secure_connect_bundle': 'secure-connect-codebytes.zip'
     }
+    auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
+    cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+
+    # Connect to the Cassandra cluster and create a session
+    session = cluster.connect()
+
 
     #list of functions
     def getAllUsers():
-        cluster = Cluster(cloud=cloud_config)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-
+    
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.user"
         result_set = session.execute(query)
@@ -188,7 +192,7 @@ class DBFunctions():
     def updateBisi(bisiDetails):
         return response
 
-    def createTables():
+    def main():
         cluster = Cluster(cloud=cloud_config)
 
         # Connect to the Cassandra cluster and create a session
