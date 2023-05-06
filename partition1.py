@@ -50,3 +50,6 @@ class Partition1(QVBoxLayout):
         else:
             bisilist = ['a1a','b1b','c1c'] #VK : default list when not connected to db. Think over it
         return bisilist
+
+
+
