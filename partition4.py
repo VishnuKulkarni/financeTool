@@ -6,7 +6,7 @@ class Partition4(QVBoxLayout):
 
         # Create label for partition
         self.label = QLabel('Partition 4')
-        self.label.setFixedSize(200, 150)
+        self.label.setFixedSize(200, 15)
         self.frame = QFrame()
         self.frame.setFrameShape(QFrame.Box)
 

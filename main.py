@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
 
         # Set main window title and size
         self.setWindowTitle('Large GUI')
-        self.setFixedSize(1600, 900)
+        self.setFixedSize(1700, 900)
 
         # Create grid layout for partitions
         self.grid = QGridLayout()
@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
         self.grid.addLayout(Partition1(), 0, 0)
         self.grid.addLayout(Partition2(), 0, 1)
         self.grid.addLayout(Partition3(), 0, 2)
-        self.grid.addLayout(Partition4(), 0, 3)
+        self.grid.addLayout(Partition4(), 0,3)
 
         # Create central widget and set grid layout
         self.central_widget = QWidget()

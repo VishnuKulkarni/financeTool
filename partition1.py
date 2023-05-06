@@ -8,7 +8,7 @@ class Partition1(QVBoxLayout):
 
         # Create label for partition
         self.label = QLabel('Partition 1')
-        self.label.setFixedSize(200, 150)
+        self.label.setFixedSize(200, 15)
         self.frame = QFrame()
         self.frame.setFrameShape(QFrame.Box)
 
@@ -18,16 +18,23 @@ class Partition1(QVBoxLayout):
 
         self.checkbox = QCheckBox('Checkbox')
         self.textinput = QLineEdit()
+
+        self.dropdown_label = QLabel('List of BiSi')
         self.dropdown = QComboBox()
+
         self.dropdown.addItems(self.GetBisiList())
         self.textdisplay = QTextEdit()
 
         # Add button, checkbox, text input, dropdown menu, and text display area to partition layout
         self.addWidget(self.label)
         self.addWidget(self.button1)
+
         self.addWidget(self.checkbox)
         self.addWidget(self.textinput)
+
+        self.addWidget(self.dropdown_label)
         self.addWidget(self.dropdown)
+
         self.addWidget(self.textdisplay)
         self.addWidget(self.frame)
 
