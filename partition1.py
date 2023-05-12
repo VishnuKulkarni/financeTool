@@ -42,11 +42,11 @@ class Partition1(QVBoxLayout):
         self.line2.setFrameShape(QFrame.HLine)
         self.line2.setFrameShadow(QFrame.Sunken)
 
-        self.dropdown_label_ppl = QLabel('List of People')
-        self.dropdown_ppl = QComboBox()
+        #self.dropdown_label_ppl = QLabel('List of People')
+        #self.dropdown_ppl = QComboBox()
         #self.dropdown_ppl.addItems(self.GetPplList()) #this shud fetch data from db based on BiSI name selected
-        self.selected_option_ppl = self.dropdown_ppl.currentText()
-        self.dropdown_ppl.activated.connect(self.DisplayPersonDetails)
+        #self.selected_option_ppl = self.dropdown_ppl.currentText()
+        #self.dropdown_ppl.activated.connect(self.DisplayPersonDetails)
 
         self.textdisplay = QTextEdit()
 
@@ -74,8 +74,8 @@ class Partition1(QVBoxLayout):
 
         self.addWidget(self.line2)
 
-        self.addWidget(self.dropdown_label_ppl)
-        self.addWidget(self.dropdown_ppl)
+        #self.addWidget(self.dropdown_label_ppl)
+        #self.addWidget(self.dropdown_ppl)
 
         self.addWidget(self.scroll)
 
@@ -105,36 +105,15 @@ class Partition1(QVBoxLayout):
 
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
-
+        Partition2().GetPplList()
         # Set the text display area's text to the desired text
         self.textdisplay.append(f"Details of : {bisiName} BC")
-
-        self.GetPplList()
         #return text
 
-    def GetPplList(self):
-        if common.CONNECTED:
-            pplList = ["pp1", "pp2", "pp3"]  # SAL : call the 'ListOfPll' api here for specific bisi
-        else:
-            pplList = ['Not Connected']  # VK : default list when not connected to db. Think over it
-
-        # Clear the current items in the ppl list  drop-down menu
-        self.dropdown_ppl.clear()
-        self.dropdown_ppl.addItems(pplList)
-
-    def GetNameOfPersonSelected(self):
-        personName = self.dropdown_ppl.currentText()
-        print(personName)
-        return personName
-
-    def DisplayPersonDetails(self):
-        personName = self.GetNameOfPersonSelected()
-        # Set the text display area's text to the desired text
-        self.textdisplay.append(f"Person Selected : {personName}")
-
-        #partition2_instance.displayPersonDetailsFull(self)
 
     def ClearTextDisplay(self):
+
         self.textdisplay.clear()
+
 
 
