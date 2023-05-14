@@ -5,13 +5,18 @@ import common
 from partition2 import Partition2
 from partition3 import Partition3
 from partition4 import Partition4
+from functions import DBFunctions
+from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
 
 
 class Partition1(QVBoxLayout):
     CONNECTED = False
     selected_option = "none"
-    def __init__(self):
+    def __init__(self,partition2):
         super().__init__()
+
+        self.partition2 = partition2
 
         # Create label for partition
         self.label = QLabel('DASHBOARD')
@@ -95,25 +100,26 @@ class Partition1(QVBoxLayout):
         # Clear the current items in the bisi drop-down menu
         self.dropdown.clear()
         self.dropdown.addItems(self.GetBisiList())
+       
 
     def GetBisiList(self):
         if common.CONNECTED:
-            bisilist = ["bisi 1","bisi 2","bisi 33"] # SAL : call the 'ListOfBisi' api here
+            bisilist = DBFunctions.getAllBisis() # SAL : call the 'ListOfBisi' api here
         else:
             bisilist = ['Not Connected'] #VK : default list when not connected to db. Think over it
         return bisilist
 
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
-        Partition2().GetPplList()
+        #Partition2().GetPplList()
+        #Partition2().test()
+        self.partition2.GetPplList()
         # Set the text display area's text to the desired text
         self.textdisplay.append(f"Details of : {bisiName} BC")
         #return text
 
 
     def ClearTextDisplay(self):
-
         self.textdisplay.clear()
-
 
 

@@ -27,9 +27,11 @@ class Partition2(QVBoxLayout):
 
         self.dropdown_label_ppl = QLabel('List of People')
         self.dropdown_ppl = QComboBox()
-        self.dropdown_ppl.addItems(self.GetPplList()) #this shud fetch data from db based on BiSI name selected
-        self.selected_option_ppl = self.dropdown_ppl.currentText()
-        self.dropdown_ppl.activated.connect(self.GetNameOfPersonSelected)
+       
+        self.dropdown_ppl.addItems(['Not nnected']) #this shud fetch data from db based on BiSI name selected
+
+        #self.selected_option_ppl = self.dropdown_ppl.currentText()
+        #self.dropdown_ppl.activated.connect(self.GetNameOfPersonSelected)
 
 
         self.textdisplay_partition2 = QTextEdit()
@@ -47,17 +49,37 @@ class Partition2(QVBoxLayout):
         self.addWidget(self.frame)
 
     def GetPplList(self):
-
+        print("in get people")
+        print(common.CONNECTED)
         if common.CONNECTED:
+            print("in true")
             pplList = ['pp1', 'pp2', 'pp3']  # SAL : call the 'ListOfPll' api here for specific bisi
         else:
             pplList = ['Not nnected']  # VK : default list when not connected to db. Think over it
 
         # Clear the current items in the ppl list  drop-down menu
+        print("people list")
+        #print(pplList)
+        #self.dropdown_ppl.blockSignals(True)
         self.dropdown_ppl.clear()
+        print("after clear")
         self.dropdown_ppl.addItems(pplList)
+        #self.dropdown_ppl.blockSignals(False)
 
         return pplList
+
+    def test(self):
+        print("in test")
+        #self.dropdown_ppl.blockSignals(True)
+
+        self.dropdown_ppl.clear()
+        print("after clear")
+        self.dropdown_ppl.addItems(['pp1', 'pp2', 'pp3'])
+        print("after set")
+
+        #self.dropdown_ppl.blockSignals(False)
+
+
 
     def DisplayPersonDetails(self):
         personName = self.GetNameOfPersonSelected()
