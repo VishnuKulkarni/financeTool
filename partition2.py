@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QFont
 from qtpy.QtWidgets import QVBoxLayout,QApplication,  QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
 
 import common
@@ -12,6 +13,7 @@ class Partition2(QVBoxLayout):
 
         # Create label for partition
         self.label = QLabel('PERSON DETAILS')
+        self.label.setFont(QFont("Arial", 8, QFont.Bold))
         self.label.setFixedSize(200, 15)
         self.frame = QFrame()
         self.frame.setFrameShape(QFrame.Box)
@@ -21,20 +23,19 @@ class Partition2(QVBoxLayout):
         self.checkbox = QCheckBox('Checkbox')
         self.textinput = QLineEdit()
 
-        #self.dropdown = QComboBox()
-        #self.dropdown.addItems(['Option 1', 'Option 2', 'Option 3'])
-
-
         self.dropdown_label_ppl = QLabel('List of People')
         self.dropdown_ppl = QComboBox()
        
         self.dropdown_ppl.addItems(['Not nnected']) #this shud fetch data from db based on BiSI name selected
 
-        #self.selected_option_ppl = self.dropdown_ppl.currentText()
-        #self.dropdown_ppl.activated.connect(self.GetNameOfPersonSelected)
-
+        self.selected_option_ppl = self.dropdown_ppl.currentText()
+        self.dropdown_ppl.activated.connect(self.DisplayPersonDetails)
 
         self.textdisplay_partition2 = QTextEdit()
+
+        # Add clear button for text display area
+        self.clear_button = QPushButton('Clear')
+        self.clear_button.clicked.connect(self.ClearTextDisplay)
 
         # Add button, checkbox, text input, dropdown menu, and text display area to partition layout
         self.addWidget(self.label)
@@ -46,40 +47,22 @@ class Partition2(QVBoxLayout):
         self.addWidget(self.dropdown_ppl)
 
         self.addWidget(self.textdisplay_partition2)
+
+        self.addWidget(self.clear_button)
+
         self.addWidget(self.frame)
 
     def GetPplList(self):
-        print("in get people")
-        print(common.CONNECTED)
         if common.CONNECTED:
-            print("in true")
             pplList = ['pp1', 'pp2', 'pp3']  # SAL : call the 'ListOfPll' api here for specific bisi
         else:
             pplList = ['Not nnected']  # VK : default list when not connected to db. Think over it
 
         # Clear the current items in the ppl list  drop-down menu
-        print("people list")
-        #print(pplList)
-        #self.dropdown_ppl.blockSignals(True)
         self.dropdown_ppl.clear()
-        print("after clear")
         self.dropdown_ppl.addItems(pplList)
-        #self.dropdown_ppl.blockSignals(False)
 
         return pplList
-
-    def test(self):
-        print("in test")
-        #self.dropdown_ppl.blockSignals(True)
-
-        self.dropdown_ppl.clear()
-        print("after clear")
-        self.dropdown_ppl.addItems(['pp1', 'pp2', 'pp3'])
-        print("after set")
-
-        #self.dropdown_ppl.blockSignals(False)
-
-
 
     def DisplayPersonDetails(self):
         personName = self.GetNameOfPersonSelected()
@@ -91,3 +74,6 @@ class Partition2(QVBoxLayout):
         personName = self.dropdown_ppl.currentText()
         print(personName)
         return personName
+
+    def ClearTextDisplay(self):
+        self.textdisplay_partition2.clear()

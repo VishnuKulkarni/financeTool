@@ -27,6 +27,7 @@ class Partition1(QVBoxLayout):
 
         # Create button, checkbox, text input, dropdown menu, and text display area in partition
         self.button1 = QPushButton('Connect')
+        self.button1.setStyleSheet('QPushButton { background-color: gray; }')
         self.button1.clicked.connect(self.Connect)
 
         #self.checkbox = QCheckBox('Checkbox')
@@ -46,12 +47,6 @@ class Partition1(QVBoxLayout):
         self.line2 = QFrame()
         self.line2.setFrameShape(QFrame.HLine)
         self.line2.setFrameShadow(QFrame.Sunken)
-
-        #self.dropdown_label_ppl = QLabel('List of People')
-        #self.dropdown_ppl = QComboBox()
-        #self.dropdown_ppl.addItems(self.GetPplList()) #this shud fetch data from db based on BiSI name selected
-        #self.selected_option_ppl = self.dropdown_ppl.currentText()
-        #self.dropdown_ppl.activated.connect(self.DisplayPersonDetails)
 
         self.textdisplay = QTextEdit()
 
@@ -79,9 +74,6 @@ class Partition1(QVBoxLayout):
 
         self.addWidget(self.line2)
 
-        #self.addWidget(self.dropdown_label_ppl)
-        #self.addWidget(self.dropdown_ppl)
-
         self.addWidget(self.scroll)
 
         self.addWidget(self.clear_button)
@@ -92,10 +84,11 @@ class Partition1(QVBoxLayout):
     def Connect(self):
         #SAL : add connection code here. After success set 'Partition1.CONNECTED = True'
         common.CONNECTED = True
-        #Partition1.CONNECTED = True
-        print("connected")
-
-        #if connection fails,set 'Partition1.CONNECTED = False'
+        if common.CONNECTED:
+            self.button1.setStyleSheet('QPushButton { background-color: green; }')
+            print("connected")
+        else:
+            self.button1.setStyleSheet('QPushButton { background-color: red; }')
 
         # Clear the current items in the bisi drop-down menu
         self.dropdown.clear()
@@ -111,8 +104,6 @@ class Partition1(QVBoxLayout):
 
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
-        #Partition2().GetPplList()
-        #Partition2().test()
         self.partition2.GetPplList()
         # Set the text display area's text to the desired text
         self.textdisplay.append(f"Details of : {bisiName} BC")
