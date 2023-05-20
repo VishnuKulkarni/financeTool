@@ -67,7 +67,13 @@ class Partition2(QVBoxLayout):
     def DisplayPersonDetails(self):
         personName = self.GetNameOfPersonSelected()
         # Set the text display area's text to the desired text
-        self.textdisplay_partition2.append(f"Person Selected : {personName}")
+        self.textdisplay_partition2.append(f"Person Name: {personName}")
+        self.textdisplay_partition2.append(f"Person's address : {personName}")
+        self.textdisplay_partition2.append(f"Person's phone : {personName}")
+        self.textdisplay_partition2.append(f"Person's encash status : {personName}")
+        self.textdisplay_partition2.append(f"Encash value : {personName}")
+        self.textdisplay_partition2.append(f"TBD : {personName}")
+        self.textdisplay_partition2.append(f"------------------------------------------------------------------")
 
 
     def GetNameOfPersonSelected(self):

@@ -105,8 +105,20 @@ class Partition1(QVBoxLayout):
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
         self.partition2.GetPplList()
-        # Set the text display area's text to the desired text
-        self.textdisplay.append(f"Details of : {bisiName} BC")
+
+        #SAL : get following details of the selected Bisi
+        self.textdisplay.append(f"BC Name: {bisiName} ")
+        self.textdisplay.append(f"BC Status: {bisiName} ")
+        self.textdisplay.append(f"Sum Assured : {bisiName} BC")
+        self.textdisplay.append(f"Total Months : {bisiName} BC")
+        self.textdisplay.append(f"Start Date : {bisiName} BC")
+        self.textdisplay.append(f"End Date : {bisiName} BC")
+        self.textdisplay.append(f"Number of People : {bisiName} BC")
+        self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
+        self.textdisplay.append(f"------------------------------------------------------------------")
+
+
+
         #return text
 
 
