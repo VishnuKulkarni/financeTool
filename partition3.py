@@ -1,6 +1,9 @@
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QHBoxLayout, QDateEdit
+from PyQt5.QtWidgets import QHBoxLayout, QDateEdit, QMessageBox
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
+
+import common
+
 
 class Partition3(QVBoxLayout):
     def __init__(self):
@@ -16,8 +19,11 @@ class Partition3(QVBoxLayout):
         # Create button, checkbox, text input, dropdown menu, and text display area in partition
         self.button_bisi_submit = QPushButton('Submit')
         self.button_bisi_submit.setStyleSheet('background-color: gray; color: white;')
+        self.button_bisi_submit.clicked.connect(self.Button_bisi_submit)
 
         self.checkbox = QCheckBox('Checkbox')
+
+        self.msg_box = QMessageBox()
 
         #create input fields
         self.textinput_label1 = QLabel('BiSi Name    ')
@@ -41,6 +47,7 @@ class Partition3(QVBoxLayout):
 
         self.textinput1 = QLineEdit()
         self.textinput2 = QLineEdit()
+
         # Create a QDateEdit widget
         self.start_date_edit = QDateEdit()
         self.start_date_edit.setCalendarPopup(True)
@@ -191,4 +198,28 @@ class Partition3(QVBoxLayout):
         #self.addWidget(self.textdisplay)
         self.addWidget(self.submit_button)
         self.addWidget(self.frame)
+
+
+
+
+
+    def Button_bisi_submit(self):
+        if (common.CONNECTED):
+            newBisiData = {
+                'bisiName': self.textinput1.text(),
+                'bisiStatus': self.textinput8.text(),
+                'bisiStartDate': self.start_date_edit.text(),
+                'bisiEndDate': self.end_date_edit.text(),
+                'bisiSumAssured': self.textinput5.text(),
+                'bisiComission': self.textinput6.text(),
+                'bisiTotalPpl': self.textinput7.text(),
+                'bisiTotalMonths': self.textinput2.text()
+
+            }
+            common.InfoPopUp(self,'data submitted')
+        else:
+            common.InfoPopUp(self, 'PLEASE get online 1st')
+
+
+        #sal - call you db write function and write these fields
 

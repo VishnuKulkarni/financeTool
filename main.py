@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
         # Add partition widgets to grid layout
         
         partition2 = Partition2()
+        partition3 = Partition3()
         self.grid.addLayout(partition2, 0, 1)
         self.grid.addLayout(Partition1(partition2), 0, 0)
         self.grid.addLayout(Partition3(), 0, 2)
@@ -35,5 +36,9 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     app.exec_()
+
+
+
+
 
 
