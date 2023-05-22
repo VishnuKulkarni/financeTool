@@ -4,6 +4,8 @@ from qtpy.QtWidgets import QVBoxLayout,QApplication,  QLabel, QFrame, QPushButto
 import common
 from partition3 import Partition3
 from partition4 import Partition4
+from functions import DBFunctions
+
 
 class Partition2(QVBoxLayout):
     selected_option_ppl = "none"
@@ -52,9 +54,10 @@ class Partition2(QVBoxLayout):
 
         self.addWidget(self.frame)
 
-    def GetPplList(self):
+    def GetPplList(self,bisiName):
         if common.CONNECTED:
-            pplList = ['pp1', 'pp2', 'pp3']  # SAL : call the 'ListOfPll' api here for specific bisi
+            pplList = DBFunctions.getAllUsersListByBisiName(bisiName)  
+            # SAL : call the 'ListOfPll' api here for specific bisi
         else:
             pplList = ['Not nnected']  # VK : default list when not connected to db. Think over it
 
@@ -66,6 +69,7 @@ class Partition2(QVBoxLayout):
 
     def DisplayPersonDetails(self):
         personName = self.GetNameOfPersonSelected()
+        
         # Set the text display area's text to the desired text
         self.textdisplay_partition2.append(f"Person Name: {personName}")
         self.textdisplay_partition2.append(f"Person's address : {personName}")

@@ -97,14 +97,14 @@ class Partition1(QVBoxLayout):
 
     def GetBisiList(self):
         if common.CONNECTED:
-            bisilist = DBFunctions.getAllBisis() # SAL : call the 'ListOfBisi' api here
+            bisilist = DBFunctions.getAllBisisList() # SAL : call the 'ListOfBisi' api here
         else:
             bisilist = ['Not Connected'] #VK : default list when not connected to db. Think over it
         return bisilist
 
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
-        self.partition2.GetPplList()
+        self.partition2.GetPplList(bisiName)
 
         #SAL : get following details of the selected Bisi
         self.textdisplay.append(f"BC Name: {bisiName} ")
