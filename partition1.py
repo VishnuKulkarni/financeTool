@@ -105,6 +105,7 @@ class Partition1(QVBoxLayout):
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
         self.partition2.GetPplList(bisiName)
+        #DBFunctions.getBisiHistory(bisiName)
 
         #SAL : get following details of the selected Bisi
         self.textdisplay.append(f"BC Name: {bisiName} ")

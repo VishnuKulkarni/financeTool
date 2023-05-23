@@ -69,8 +69,11 @@ class Partition2(QVBoxLayout):
 
     def DisplayPersonDetails(self):
         personName = self.GetNameOfPersonSelected()
-        
-        # Set the text display area's text to the desired text
+
+        #VK: Figure out a way to bring bisi Name from Partition 1
+        person_dict = DBFunctions.getUserDetailsByUserNameAndBisiName(personName,'bisi1') 
+
+        # VK: Set the text display area's text from the above dict
         self.textdisplay_partition2.append(f"Person Name: {personName}")
         self.textdisplay_partition2.append(f"Person's address : {personName}")
         self.textdisplay_partition2.append(f"Person's phone : {personName}")

@@ -109,7 +109,8 @@ class DBFunctions():
 
         return result_set
     
-    def getBisiHistory(name):
+    def getBisiHistory(bisiName):
+        print("in history")
         # Set up the connection details for the Cassandra cluster
         cloud_config= {
             'secure_connect_bundle': 'secure-connect-codebytes.zip'
@@ -122,33 +123,41 @@ class DBFunctions():
         cluster = Cluster(cloud=cloud_config)
 
         # Execute a simple CQL query
-        query = "SELECT history FROM Bisi.bisi WHERE name=?"
+        query = "SELECT bisiCommisionHistoryData FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
         # Prepare the statement
         prepared = session.prepare(query)
 
-        result_set = session.execute(prepared,name)
-        json_objects = []
+        result_set = session.execute(prepared,(bisiName,))
+        print("executed")
+        structured_dict = {}
+
+        # Extract and store the map values
         for row in result_set:
-            json_string = row[0]
-            json_object = json.loads(json_string)
-            json_objects.append(json_object)
+            bisiCommisionHistoryData = row.bisicommisionhistorydata
+            print(bisiCommisionHistoryData)
+            print("raw")
 
-        # Print the JSON objects
-        for json_obj in json_objects:
-            print(json_obj)
+            for key, value in bisiCommisionHistoryData.items():
+                structured_dict[key] = value
 
+        print(structured_dict)
         # Clean up the session and cluster objects
         session.shutdown()
         cluster.shutdown()
 
-        return json_objects
+        return structured_dict
 
     def getUserDetailsByUserNameAndBisiName(personName, bisiName):
-        cluster = Cluster(cloud=cloud_config)
+        # Set up the connection details for the Cassandra cluster
+        cloud_config= {
+            'secure_connect_bundle': 'secure-connect-codebytes.zip'
+        }
+        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
+        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 
         # Connect to the Cassandra cluster and create a session
         session = cluster.connect()
-
+        cluster = Cluster(cloud=cloud_config)
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.user WHERE personName=? AND personAssociatedBisi=? ALLOW FILTERING"
         # Prepare the statement
@@ -158,10 +167,17 @@ class DBFunctions():
 
         result_dict = []
         for row in result_set:
-            row_dict = {
-                'column1': row.column1,
-                'column2': row.column2,
-                'column3': row.column3
+            row_dict = { 
+                'personName':personName,
+                'personGender': row.persongender,
+                'personAddress': row.personaddress,
+                'personPhone': row.personphone,
+                'personAadhar': row.personaadhar,
+                'personDob': row.persondob,
+                'personBisiEncashStatus': row.personbisiencashstatus,
+                'personBisiEncashedValue': row.personbisiencashedvalue,
+                'personBisiNameWhichIsEncashed': row.personbisinamewhichisencashed,
+                'personAssociatedBisi': bisiName,
             }
             result_dict.append(row_dict)
 
@@ -169,7 +185,9 @@ class DBFunctions():
         session.shutdown()
         cluster.shutdown()
 
-        return result_set
+        print(result_dict)
+
+        return result_dict
 
     def getUserDetailsByUserPhone(phone):
         cluster = Cluster(cloud=cloud_config)
@@ -270,4 +288,15 @@ class DBFunctions():
         # Process the result set...
         for row in result_set:
             print(row)
+
+
+        json_objects = []
+        for row in result_set:
+            json_string = row[0]
+            json_object = json.loads(json_string)
+            json_objects.append(json_object)
+
+        # Print the JSON objects
+        #for json_obj in json_objects:
+            #print(json_obj)
 '''
