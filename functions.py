@@ -14,24 +14,8 @@ class DBFunctions():
     #session = cluster.connect()
 
     #list of functions
-    def getAllUsers():
-    
-        # Execute a simple CQL query
-        query = "SELECT * FROM Bisi.user"
-        result_set = session.execute(query)
-
-        # Process the result set...
-        for row in result_set:
-            print(row)
-
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
-
-        return result_set
 
     def getAllBisisList():
-        print("In get Bisis")
         # Set up the connection details for the Cassandra cluster
         cloud_config= {
             'secure_connect_bundle': 'secure-connect-codebytes.zip'
@@ -56,8 +40,6 @@ class DBFunctions():
 
     #confirm what needs to be returned here:::
     def getAllUsersListByBisiName(bisiName):
-        print("In get usrs")
-
         # Set up the connection details for the Cassandra cluster
         cloud_config= {
             'secure_connect_bundle': 'secure-connect-codebytes.zip'
@@ -86,28 +68,51 @@ class DBFunctions():
 
         return python_list
 
-    def getBisiDetailsByBisiId(id):
-        cluster = Cluster(cloud=cloud_config)
+    def getBisiDetailsByBisiName(bisiName):
+        cloud_config= {
+            'secure_connect_bundle': 'secure-connect-codebytes.zip'
+        }
+        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
+        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 
         # Connect to the Cassandra cluster and create a session
         session = cluster.connect()
+        cluster = Cluster(cloud=cloud_config)
 
         # Execute a simple CQL query
-        query = "SELECT * FROM Bisi.bisi WHERE id=?"
+        query = "SELECT * FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
         # Prepare the statement
         prepared = session.prepare(query)
 
-        result_set = session.execute(prepared,id)
-
-        # Process the result set...
+        result_set = session.execute(prepared,(bisiName,))
+        result_dict = []
         for row in result_set:
-            print(row)
+            structured_dict = {}
+            bisiCommisionHistoryData = row.bisicommisionhistorydata
+
+            for key, value in bisiCommisionHistoryData.items():
+                structured_dict[key] = value
+
+            row_dict = { 
+                'bisiName':bisiName,
+                'bisiTotalMonths': row.bisitotalmonths,
+                'bisiTotalPpl': row.bisitotalppl,
+                'bisiStartDate': row.bisistartdate,
+                'bisiEndDate': row.bisienddate,
+                'bisiSumAssured': row.bisisumassured,
+                'bisiStatus': row.bisistatus,
+                'bisiComission': row.bisicomission,
+                'bisiPrevMonthComission': row.bisiprevmonthcomission,
+                'bisiCommisionHistoryData': structured_dict,
+            }
+            result_dict.append(row_dict)
+        
 
         # Clean up the session and cluster objects
         session.shutdown()
         cluster.shutdown()
 
-        return result_set
+        return result_dict
     
     def getBisiHistory(bisiName):
         print("in history")
@@ -299,4 +304,21 @@ class DBFunctions():
         # Print the JSON objects
         #for json_obj in json_objects:
             #print(json_obj)
+
+
+    def getAllUsers():
+    
+        # Execute a simple CQL query
+        query = "SELECT * FROM Bisi.user"
+        result_set = session.execute(query)
+
+        # Process the result set...
+        for row in result_set:
+            print(row)
+
+        # Clean up the session and cluster objects
+        session.shutdown()
+        cluster.shutdown()
+
+        return result_set
 '''
