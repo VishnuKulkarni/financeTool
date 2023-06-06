@@ -81,6 +81,8 @@ class Partition2(QVBoxLayout):
         self.textdisplay_partition2.append(f"Encash value : {personName}")
         self.textdisplay_partition2.append(f"TBD : {personName}")
         self.textdisplay_partition2.append(f"------------------------------------------------------------------")
+        self.textdisplay.append(f"Coming from db: {person_dict}")
+
 
 
     def GetNameOfPersonSelected(self):

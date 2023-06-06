@@ -105,6 +105,7 @@ class Partition1(QVBoxLayout):
     def GetNameOfBisiSelected(self):
         bisiName = self.dropdown.currentText()
         self.partition2.GetPplList(bisiName)
+        bisi_dict = DBFunctions.getBisiDetailsByBisiName(bisiName)
         #DBFunctions.getBisiHistory(bisiName)
 
         #SAL : get following details of the selected Bisi
@@ -117,6 +118,7 @@ class Partition1(QVBoxLayout):
         self.textdisplay.append(f"Number of People : {bisiName} BC")
         self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
         self.textdisplay.append(f"------------------------------------------------------------------")
+        self.textdisplay.append(f"Coming from db: {bisi_dict}")
 
 
 
