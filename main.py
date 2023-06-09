@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QFont, QIcon
 from qtpy.QtWidgets import QApplication, QMainWindow, QGridLayout, QWidget
 from partition1 import Partition1
 from partition2 import Partition2
@@ -9,7 +10,10 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # Set main window title and size
-        self.setWindowTitle('Large GUI')
+        self.setWindowTitle("Shri Sai Prasanna - Finance & Auto Leasing Company ")
+        # Set the window icon
+        icon = QIcon("icon.jpg")  # Replace "path/to/icon.png" with the actual path to your icon file
+        self.setWindowIcon(icon)
         self.setFixedSize(1700, 900)
 
         # Create grid layout for partitions
