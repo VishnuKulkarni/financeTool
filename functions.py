@@ -20,7 +20,6 @@ class DBFunctions():
     def getAllBisisList():
         session = cassandra_manager.session
 
-
         # Execute a simple CQL query
         query = "SELECT bisiName FROM Bisi.bisi"
         result_set = session.execute(query)
@@ -175,6 +174,8 @@ class DBFunctions():
         return result_set
 
     def addNewUser(userDetails):
+        session = cassandra_manager.session
+
         # Prepare the INSERT statement
         insert_statement = session.prepare("INSERT INTO your_table (column1, column2, column3) VALUES (?, ?, ?)")
 
@@ -202,16 +203,16 @@ class DBFunctions():
 
         # Execute the INSERT statement with values from the dictionary
         response=session.execute(insert_statement,(
-    data['id'],
-    data['bisiName'],
-    data['bisiTotalMonths'],
-    data['bisiTotalPpl'],
-    data['bisiStartDate'],
-    data['bisiEndDate'],
-    data['bisiSumAssured'],
-    data['bisiStatus'],
-    data['bisiComission']
-))
+                data['id'],
+                data['bisiName'],
+                data['bisiTotalMonths'],
+                data['bisiTotalPpl'],
+                data['bisiStartDate'],
+                data['bisiEndDate'],
+                data['bisiSumAssured'],
+                data['bisiStatus'],
+                data['bisiComission']
+            ))
 
         return response
 

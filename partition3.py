@@ -207,6 +207,7 @@ class Partition3(QVBoxLayout):
     def Button_new_bisi_submit(self):
         if (common.CONNECTED):
             newBisiData = {
+                'id':uuid.uuid4(),
                 'bisiName': self.textinput1.text(),
                 'bisiStatus': self.textinput8.text(),
                 'bisiStartDate': self.start_date_edit.text(),
