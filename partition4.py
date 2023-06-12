@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QDateEdit
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
 
 import common
-
+from functions import DBFunctions
 
 class Partition4(QVBoxLayout):
     def __init__(self):
@@ -33,8 +33,8 @@ class Partition4(QVBoxLayout):
 
 
         self.dropdown_label = QLabel('Select BiSi')
-        self.dropdown = QComboBox()
-        self.dropdown.addItems(['Option 1', 'Option 2', 'Option 3'])
+        self.dropdown_partion4 = QComboBox()
+        self.dropdown_partion4.addItems(['Not Connected'])
 
         self.textdisplay = QTextEdit()
 
@@ -43,7 +43,7 @@ class Partition4(QVBoxLayout):
         self.textinput_label2 = QLabel('Months Completed     ')
         self.textinput_label3 = QLabel('Current Encash Sum   ')
         self.textinput_label4 = QLabel('Current Encash Date  ')
-        self.textinput_label5 = QLabel('Current Comission      ')
+        self.textinput_label5 = QLabel('Current Commission      ')
         self.textinput_label6 = QLabel('TBD                          ')
 
 
@@ -94,7 +94,7 @@ class Partition4(QVBoxLayout):
         self.addWidget(self.label)
 
         self.addWidget(self.dropdown_label)
-        self.addWidget(self.dropdown)
+        self.addWidget(self.dropdown_partion4)
 
         self.addLayout(input_layout1)
         self.addLayout(input_layout2)
@@ -115,7 +115,7 @@ class Partition4(QVBoxLayout):
     def Button_RecordEntrySubmit(self):
         if (common.CONNECTED):
             bisiRecordEntryData = {
-            'bisiName':self.dropdown.currentText(),
+            'bisiName':self.dropdown_partion4.currentText(),
             'bisiStatus':self.textinput1.text(),
             'bisiMonthsCompleted':self.textinput2.text(),
             'bisiCurrentMonthEncashedSum':self.textinput3.text(),

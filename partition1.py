@@ -13,10 +13,11 @@ from cassandra.auth import PlainTextAuthProvider
 class Partition1(QVBoxLayout):
     CONNECTED = False
     selected_option = "none"
-    def __init__(self,partition2):
+    def __init__(self,partition2, partition4):
         super().__init__()
 
         self.partition2 = partition2
+        self.partition4 = partition4
 
         # Create label for partition
         self.label = QLabel('DASHBOARD')
@@ -83,16 +84,23 @@ class Partition1(QVBoxLayout):
 
     def Connect(self):
         #SAL : add connection code here. After success set 'Partition1.CONNECTED = True'
-        common.CONNECTED = True
         if common.CONNECTED:
             self.button1.setStyleSheet('QPushButton { background-color: green; }')
+            common.CONNECTED = True
             print("connected")
         else:
+            common.CONNECTED = False
             self.button1.setStyleSheet('QPushButton { background-color: red; }')
 
         # Clear the current items in the bisi drop-down menu
         self.dropdown.clear()
         self.dropdown.addItems(self.GetBisiList())
+
+        #we need to update the drop downs in all other places of the gui here.
+        # or just think of having 1 wrapper function to update all widgest as soon as connect =  true
+        self.partition4.dropdown_partion4.clear()
+        self.partition4.dropdown_partion4.addItems(self.GetBisiList())
+
        
 
     def GetBisiList(self):

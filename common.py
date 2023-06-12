@@ -28,3 +28,9 @@ def DisplayErrorPopUp(self, msg):
     # Show the information pop-up
     self.msg_box.exec_()
 
+def RefresgWidgestAfterDbUpdate(self):
+    return True
+
+
+
+
