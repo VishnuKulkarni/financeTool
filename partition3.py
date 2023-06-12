@@ -2,6 +2,8 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QHBoxLayout, QDateEdit, QMessageBox
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
+from functions import DBFunctions
+import uuid
 
 import common
 
@@ -211,11 +213,12 @@ class Partition3(QVBoxLayout):
                 'bisiEndDate': self.end_date_edit.text(),
                 'bisiSumAssured': self.textinput5.text(),
                 'bisiComission': self.textinput6.text(),
-                'bisiTotalPpl': self.textinput7.text(),
-                'bisiTotalMonths': self.textinput2.text()
+                'bisiTotalPpl': int(self.textinput7.text()),
+                'bisiTotalMonths': int(self.textinput2.text())
 
             }
             # sal - call you db write function here and write 'newBisiData' dictionary in db
+            DBFunctions.addNewBisi(newBisiData)
             common.DisplayInfoPopUp(self,'Submit Success')
         else:
             common.DisplayErrorPopUp(self, 'PLEASE get online 1st')
