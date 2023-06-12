@@ -71,7 +71,7 @@ class Partition2(QVBoxLayout):
         personName = self.GetNameOfPersonSelected()
 
         #VK: Figure out a way to bring bisi Name from Partition 1
-        person_dict = DBFunctions.getUserDetailsByUserNameAndBisiName(personName,'bisi1') 
+        #person_dict = DBFunctions.getUserDetailsByUserNameAndBisiName(personName,'bisi1')
 
         # VK: Set the text display area's text from the above dict
         self.textdisplay_partition2.append(f"Person Name: {personName}")
@@ -81,7 +81,7 @@ class Partition2(QVBoxLayout):
         self.textdisplay_partition2.append(f"Encash value : {personName}")
         self.textdisplay_partition2.append(f"TBD : {personName}")
         self.textdisplay_partition2.append(f"------------------------------------------------------------------")
-        self.textdisplay.append(f"Coming from db: {person_dict}")
+        #self.textdisplay.append(f"Coming from db: {person_dict}")
 
 
 

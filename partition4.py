@@ -2,6 +2,9 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QHBoxLayout, QDateEdit
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
 
+import common
+
+
 class Partition4(QVBoxLayout):
     def __init__(self):
         super().__init__()
@@ -75,8 +78,10 @@ class Partition4(QVBoxLayout):
         self.dropdown_ppl.addItems(['ppl 1', 'ppl 2', 'ppl 3'])
 
         # Add clear button for text display area
-        self.submit_button = QPushButton('Submit')
-        self.submit_button.setStyleSheet('background-color: gray; color: white;')
+        self.button_RecordEntrySubmit = QPushButton('Submit')
+        self.button_RecordEntrySubmit.setStyleSheet('background-color: gray; color: white;')
+        self.button_RecordEntrySubmit.clicked.connect(self.Button_RecordEntrySubmit)
+
 
         # Add clear button for text display area
         self.clear_button = QPushButton('Clear')
@@ -100,9 +105,24 @@ class Partition4(QVBoxLayout):
         #self.addLayout(input_layout7)
         self.addWidget(self.dropdown_label_ppl)
         self.addWidget(self.dropdown_ppl)
-        self.addWidget(self.submit_button)
+        self.addWidget(self.button_RecordEntrySubmit)
 
 
         self.addWidget(self.textdisplay)
         self.addWidget(self.clear_button)
         self.addWidget(self.frame)
+
+    def Button_RecordEntrySubmit(self):
+        if (common.CONNECTED):
+            bisiRecordEntryData = {
+            'bisiName':self.dropdown.currentText(),
+            'bisiStatus':self.textinput1.text(),
+            'bisiMonthsCompleted':self.textinput2.text(),
+            'bisiCurrentMonthEncashedSum':self.textinput3.text(),
+            'bisiCurrentMonthEncashedDate':self.encash_date_edit.text(),
+            'bisiCurrentComission':self.textinput1.text()
+
+            }
+
+
+

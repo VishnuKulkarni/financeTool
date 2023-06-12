@@ -1,3 +1,4 @@
+from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QHBoxLayout, QDateEdit, QMessageBox
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
@@ -17,9 +18,9 @@ class Partition3(QVBoxLayout):
         self.frame.setFrameShape(QFrame.Box)
 
         # Create button, checkbox, text input, dropdown menu, and text display area in partition
-        self.button_bisi_submit = QPushButton('Submit')
-        self.button_bisi_submit.setStyleSheet('background-color: gray; color: white;')
-        self.button_bisi_submit.clicked.connect(self.Button_bisi_submit)
+        self.button_new_bisi_submit = QPushButton('Submit')
+        self.button_new_bisi_submit.setStyleSheet('background-color: gray; color: white;')
+        self.button_new_bisi_submit.clicked.connect(self.Button_new_bisi_submit)
 
         self.checkbox = QCheckBox('Checkbox')
 
@@ -35,8 +36,8 @@ class Partition3(QVBoxLayout):
         self.textinput_label7 = QLabel('Total People ')
         self.textinput_label8 = QLabel('BiSi Status    ')
         self.textinput_label9 = QLabel('T B D           ')
-        self.textinput_label10 = QLabel('First Name   ')
-        self.textinput_label11 = QLabel('Last Name    ')
+        self.textinput_label10 = QLabel('Full Name   ')
+        self.textinput_label11 = QLabel('T B D    ')
         self.textinput_label12 = QLabel('DOB            ')
         self.textinput_label13 = QLabel('Phone No     ')
         self.textinput_label14 = QLabel('Address       ')
@@ -51,12 +52,14 @@ class Partition3(QVBoxLayout):
         # Create a QDateEdit widget
         self.start_date_edit = QDateEdit()
         self.start_date_edit.setCalendarPopup(True)
+        self.start_date_edit.setDate(QDate.currentDate())
 
         self.end_date_edit = QDateEdit()
         self.end_date_edit.setCalendarPopup(True)
+        self.end_date_edit.setDate(QDate.currentDate())
 
-        self.rec_entry_date_edit = QDateEdit()
-        self.rec_entry_date_edit.setCalendarPopup(True)
+        self.person_dob = QDateEdit()
+        self.person_dob.setCalendarPopup(True)
 
         self.textinput5 = QLineEdit()
         self.textinput6 = QLineEdit()
@@ -97,9 +100,9 @@ class Partition3(QVBoxLayout):
         #self.textdisplay = QTextEdit()
 
         # Add clear button for text display area
-        self.submit_button = QPushButton('Submit')
-        self.submit_button.setStyleSheet('background-color: gray; color: white;')
-        #self.submit_button.clicked.connect(self.Submit)
+        self.button_new_person_submit = QPushButton('Submit')
+        self.button_new_person_submit.setStyleSheet('background-color: gray; color: white;')
+        self.button_new_person_submit.clicked.connect(self.Button_new_person_submit)
 
         # Create a horizontal layout for textinput_label and textinput
         input_layout1 = QHBoxLayout()
@@ -151,7 +154,7 @@ class Partition3(QVBoxLayout):
         input_layout9.addWidget(self.textinput9)
         input_layout10.addWidget(self.textinput10)
         input_layout11.addWidget(self.textinput11)
-        input_layout12.addWidget(self.textinput12)
+        input_layout12.addWidget(self.person_dob)
         input_layout13.addWidget(self.textinput13)
         input_layout14.addWidget(self.textinput14)
         input_layout15.addWidget(self.textinput15)
@@ -174,7 +177,7 @@ class Partition3(QVBoxLayout):
         self.addLayout(input_layout8)
         self.addLayout(input_layout9)
 
-        self.addWidget(self.button_bisi_submit)
+        self.addWidget(self.button_new_bisi_submit)
 
         self.addWidget(self.line1)
         self.addWidget(self.label10)
@@ -196,14 +199,10 @@ class Partition3(QVBoxLayout):
 
 
         #self.addWidget(self.textdisplay)
-        self.addWidget(self.submit_button)
+        self.addWidget(self.button_new_person_submit)
         self.addWidget(self.frame)
 
-
-
-
-
-    def Button_bisi_submit(self):
+    def Button_new_bisi_submit(self):
         if (common.CONNECTED):
             newBisiData = {
                 'bisiName': self.textinput1.text(),
@@ -216,10 +215,25 @@ class Partition3(QVBoxLayout):
                 'bisiTotalMonths': self.textinput2.text()
 
             }
-            common.InfoPopUp(self,'data submitted')
+            # sal - call you db write function here and write 'newBisiData' dictionary in db
+            common.DisplayInfoPopUp(self,'Submit Success')
         else:
-            common.InfoPopUp(self, 'PLEASE get online 1st')
+            common.DisplayErrorPopUp(self, 'PLEASE get online 1st')
 
 
-        #sal - call you db write function and write these fields
+    def Button_new_person_submit(self):
+        if (common.CONNECTED):
+            newPersonData = {
+            'personName':self.textinput10.text(),
+            'personDob':self.person_dob.text(),
+            'personAadhar':self.textinput15.text(),
+            'personPhone':self.textinput13.text(),
+            'personAddress':self.textinput14.text(),
+            'personAssociatedBisi':self.dropdown.currentText()
 
+            }
+            print(newPersonData)
+            # sal - call you db write function here and write 'newPersonData' dictionary in db
+            common.DisplayInfoPopUp(self,'Submit Success')
+        else:
+            common.DisplayErrorPopUp(self, 'PLEASE get online 1st')

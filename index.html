@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Styling for the tabs */
+    .tab {
+      display: none;
+    }
+
+    /* Styling for the active tab */
+    .tab.active {
+      display: block;
+    }
+
+    /* Styling for the checkboxes, text inputs, display window, dropdowns, and buttons */
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .display-window {
+      height: 100px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <button class="tab-button" onclick="openTab(event, 'tab1')">Tab 1</button>
+    <button class="tab-button" onclick="openTab(event, 'tab2')">Tab 2</button>
+  </div>
+
+  <div id="tab1" class="tab">
+    <div class="input-group">
+      <label>
+        <input type="checkbox" id="checkbox1"> Checkbox 1
+      </label>
+    </div>
+    <div class="input-group">
+      <label for="input1">Input 1:</label>
+      <input type="text" id="input1">
+    </div>
+    <div class="display-window" id="display1"></div>
+    <div class="input-group">
+      <label for="dropdown1">Dropdown 1:</label>
+      <select id="dropdown1">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <button class="btn" onclick="performAction(1)">Button 1</button>
+    </div>
+  </div>
+
+  <div id="tab2" class="tab">
+    <div class="input-group">
+      <label>
+        <input type="checkbox" id="checkbox2"> Checkbox 2
+      </label>
+    </div>
+    <div class="input-group">
+      <label for="input2">Input 2:</label>
+      <input type="text" id="input2">
+    </div>
+    <div class="display-window" id="display2"></div>
+    <div class="input-group">
+      <label for="dropdown2">Dropdown 2:</label>
+      <select id="dropdown2">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <button class="btn" onclick="performAction(2)">Button 2</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to open a specific tab
+    function openTab(evt, tabName) {
+      var i, tabContent, tabButtons;
+
+      // Hide all tab content
+      tabContent = document.getElementsByClassName("tab");
+
