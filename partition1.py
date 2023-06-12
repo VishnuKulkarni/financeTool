@@ -83,13 +83,13 @@ class Partition1(QVBoxLayout):
 
 
     def Connect(self):
+        dbStatus = True  # @Sal: this flag should directly come form DB. Think How ?
+        common.CONNECTED = dbStatus
         #SAL : add connection code here. After success set 'Partition1.CONNECTED = True'
         if common.CONNECTED:
             self.button1.setStyleSheet('QPushButton { background-color: green; }')
-            common.CONNECTED = True
             print("connected")
         else:
-            common.CONNECTED = False
             self.button1.setStyleSheet('QPushButton { background-color: red; }')
 
         # Clear the current items in the bisi drop-down menu
@@ -115,10 +115,11 @@ class Partition1(QVBoxLayout):
         self.partition2.GetPplList(bisiName)
         bisi_dict = DBFunctions.getBisiDetailsByBisiName(bisiName)
         #DBFunctions.getBisiHistory(bisiName)
+        print(bisi_dict)
 
         #SAL : get following details of the selected Bisi
         self.textdisplay.append(f"BC Name: {bisiName} ")
-        self.textdisplay.append(f"BC Status: {bisiName} ")
+        self.textdisplay.append(f"BC Status: {bisi_dict['bisiStatus']} ")
         self.textdisplay.append(f"Sum Assured : {bisiName} BC")
         self.textdisplay.append(f"Total Months : {bisiName} BC")
         self.textdisplay.append(f"Start Date : {bisiName} BC")
