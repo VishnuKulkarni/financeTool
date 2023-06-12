@@ -1,6 +1,8 @@
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QHBoxLayout, QDateEdit, QMessageBox
 from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
+from functions import DBFunctions
+import uuid
 
 import common
 
@@ -206,16 +208,19 @@ class Partition3(QVBoxLayout):
     def Button_bisi_submit(self):
         if (common.CONNECTED):
             newBisiData = {
+                'id':uuid.uuid4(),
                 'bisiName': self.textinput1.text(),
                 'bisiStatus': self.textinput8.text(),
                 'bisiStartDate': self.start_date_edit.text(),
                 'bisiEndDate': self.end_date_edit.text(),
                 'bisiSumAssured': self.textinput5.text(),
                 'bisiComission': self.textinput6.text(),
-                'bisiTotalPpl': self.textinput7.text(),
-                'bisiTotalMonths': self.textinput2.text()
+                'bisiTotalPpl': int(self.textinput7.text()),
+                'bisiTotalMonths': int(self.textinput2.text())
 
             }
+
+            DBFunctions.addNewBisi(newBisiData)
             common.InfoPopUp(self,'data submitted')
         else:
             common.InfoPopUp(self, 'PLEASE get online 1st')

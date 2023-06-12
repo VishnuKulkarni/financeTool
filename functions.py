@@ -179,7 +179,7 @@ class DBFunctions():
         insert_statement = session.prepare("INSERT INTO your_table (column1, column2, column3) VALUES (?, ?, ?)")
 
         # Execute the INSERT statement with values from the dictionary
-        session.execute(insert_statement, tuple(data_dict.values()))
+        session.execute(insert_statement, tuple(userDetails()))
 
         return response
 
@@ -190,7 +190,28 @@ class DBFunctions():
     def updateUser(userDetails):
         return response
 
-    def addNewBisi(bisiDetails):
+    def addNewBisi(data):
+        print("in new bisi")
+        print(data)
+        # Set up the connection details for the Cassandra cluster
+        session = cassandra_manager.session
+
+        # Prepare the INSERT statement
+        insert_statement = session.prepare("INSERT INTO Bisi.bisi (id, bisiName, bisiTotalMonths, bisiTotalPpl, bisiStartDate, bisiEndDate, bisiSumAssured, bisiStatus, bisiComission) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+        #:id, :bisiName, :bisiTotalMonths, :bisiTotalPpl, :bisiStartDate, :bisiEndDate, :bisiSumAssured, :bisiStatus, :bisiComission
+
+        # Execute the INSERT statement with values from the dictionary
+        response=session.execute(insert_statement,(
+    data['id'],
+    data['bisiName'],
+    data['bisiTotalMonths'],
+    data['bisiTotalPpl'],
+    data['bisiStartDate'],
+    data['bisiEndDate'],
+    data['bisiSumAssured'],
+    data['bisiStatus'],
+    data['bisiComission']
+))
 
         return response
 
