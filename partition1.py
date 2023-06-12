@@ -118,7 +118,7 @@ class Partition1(QVBoxLayout):
         self.textdisplay.append(f"Number of People : {bisiName} BC")
         self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
         self.textdisplay.append(f"------------------------------------------------------------------")
-        self.textdisplay.append(f"Coming from db: {bisi_dict}")
+        #self.textdisplay.append(f"Coming from db: {bisi_dict}")
 
 
 
