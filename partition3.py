@@ -188,6 +188,7 @@ class Partition3(QVBoxLayout):
 
         self.addWidget(self.dropdown_label)
         self.addWidget(self.dropdown)
+       
 
         self.addLayout(input_layout10)
         self.addLayout(input_layout11)
@@ -228,6 +229,7 @@ class Partition3(QVBoxLayout):
     def Button_new_person_submit(self):
         if (common.CONNECTED):
             newPersonData = {
+            'id':uuid.uuid4(),
             'personName':self.textinput10.text(),
             'personDob':self.person_dob.text(),
             'personAadhar':self.textinput15.text(),
@@ -237,6 +239,7 @@ class Partition3(QVBoxLayout):
 
             }
             print(newPersonData)
+            DBFunctions.addNewUser(newPersonData)
             # sal - call you db write function here and write 'newPersonData' dictionary in db
             common.DisplayInfoPopUp(self,'Submit Success')
         else:
