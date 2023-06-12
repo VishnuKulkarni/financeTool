@@ -114,21 +114,22 @@ class Partition1(QVBoxLayout):
         bisiName = self.dropdown.currentText()
         self.partition2.GetPplList(bisiName)
         bisi_dict = DBFunctions.getBisiDetailsByBisiName(bisiName)
+        print(type(bisi_dict))
         #DBFunctions.getBisiHistory(bisiName)
-        print(bisi_dict[0])
 
-        #SAL : get following details of the selected Bisi
-        self.textdisplay.append(f"BC Name: {bisi_dict[0].get('bisiName')} ")
-        self.textdisplay.append(f"BC Status: {bisi_dict[0].get('bisiStatus')} ")
-        self.textdisplay.append(f"Sum Assured : {bisi_dict[0].get('bisiSumAssured')} ")
-        self.textdisplay.append(f"Total Months : {bisi_dict[0].get('bisiTotalMonths')} ")
-        self.textdisplay.append(f"Start Date : {bisi_dict[0].get('bisiStartDate')} ")
-        self.textdisplay.append(f"End Date : {bisi_dict[0].get('bisiEndDate')} ")
-        self.textdisplay.append(f"Number of People : {bisi_dict[0].get('bisiTotalPpl')} ")
-        self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
-        self.textdisplay.append(f"------------------------------------------------------------------")
-        #self.textdisplay.append(f"Coming from db: {bisi_dict}")
-        #return text
+        if bisi_dict:
+            self.textdisplay.append(f"BC Name: {bisi_dict[0].get('bisiName', '')}")
+            self.textdisplay.append(f"BC Status: {bisi_dict[0].get('bisiStatus', '')}")
+            self.textdisplay.append(f"Sum Assured: {bisi_dict[0].get('bisiSumAssured', '')}")
+            self.textdisplay.append(f"Total Months: {bisi_dict[0].get('bisiTotalMonths', '')}")
+            self.textdisplay.append(f"Start Date: {bisi_dict[0].get('bisiStartDate', '')}")
+            self.textdisplay.append(f"End Date: {bisi_dict[0].get('bisiEndDate', '')}")
+            self.textdisplay.append(f"Number of People: {bisi_dict[0].get('bisiTotalPpl', '')}")
+            self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
+            self.textdisplay.append(f"------------------------------------------------------------------")
+        else:
+            self.textdisplay.append("Error: Failed to retrieve Bisi details")
+
 
 
     def ClearTextDisplay(self):
