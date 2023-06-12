@@ -1,6 +1,8 @@
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import json
+from cassandra_manager import cassandra_manager
+
 
 class DBFunctions():
     # Set up the connection details for the Cassandra cluster
@@ -16,16 +18,8 @@ class DBFunctions():
     #list of functions
 
     def getAllBisisList():
-        # Set up the connection details for the Cassandra cluster
-        cloud_config= {
-            'secure_connect_bundle': 'secure-connect-codebytes.zip'
-        }
-        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
-        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+        session = cassandra_manager.session
 
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-        cluster = Cluster(cloud=cloud_config)
 
         # Execute a simple CQL query
         query = "SELECT bisiName FROM Bisi.bisi"
@@ -33,23 +27,13 @@ class DBFunctions():
         final_result1 = [i[0] for i in result_set]
         print (final_result1)
         
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
         return final_result1
 
     #confirm what needs to be returned here:::
     def getAllUsersListByBisiName(bisiName):
         # Set up the connection details for the Cassandra cluster
-        cloud_config= {
-            'secure_connect_bundle': 'secure-connect-codebytes.zip'
-        }
-        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
-        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+        session = cassandra_manager.session
 
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-        cluster = Cluster(cloud=cloud_config)
 
         # Execute a simple CQL query
         query = "SELECT bisiPplList FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
@@ -62,22 +46,13 @@ class DBFunctions():
             cassandra_list = row.bisippllist
             python_list.extend(cassandra_list)        
        
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
+       
 
         return python_list
 
     def getBisiDetailsByBisiName(bisiName):
-        cloud_config= {
-            'secure_connect_bundle': 'secure-connect-codebytes.zip'
-        }
-        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
-        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-        cluster = Cluster(cloud=cloud_config)
+        # Set up the connection details for the Cassandra cluster
+        session = cassandra_manager.session
 
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
@@ -108,24 +83,11 @@ class DBFunctions():
             result_dict.append(row_dict)
         
 
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
-
         return result_dict
     
     def getBisiHistory(bisiName):
-        print("in history")
         # Set up the connection details for the Cassandra cluster
-        cloud_config= {
-            'secure_connect_bundle': 'secure-connect-codebytes.zip'
-        }
-        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
-        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-        cluster = Cluster(cloud=cloud_config)
+        session = cassandra_manager.session
 
         # Execute a simple CQL query
         query = "SELECT bisiCommisionHistoryData FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
@@ -146,23 +108,12 @@ class DBFunctions():
                 structured_dict[key] = value
 
         print(structured_dict)
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
 
         return structured_dict
 
     def getUserDetailsByUserNameAndBisiName(personName, bisiName):
         # Set up the connection details for the Cassandra cluster
-        cloud_config= {
-            'secure_connect_bundle': 'secure-connect-codebytes.zip'
-        }
-        auth_provider = PlainTextAuthProvider('zcZcWDthSpEiyCQRiWDBpGom', '34PgNiXLTu.zaiKhdstHPNZwe8gZPSJshR+BB-at61hab.mxN2MJLh_0tFwdfNRkNxgGHr,hTv8w4+c_Ig_S-ZFprsLRhfgAQjEqkSn9zqezUPo-+qphgDnj9ifkY5gz')
-        cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-        cluster = Cluster(cloud=cloud_config)
+        session = cassandra_manager.session
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.user WHERE personName=? AND personAssociatedBisi=? ALLOW FILTERING"
         # Prepare the statement
@@ -186,19 +137,13 @@ class DBFunctions():
             }
             result_dict.append(row_dict)
 
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
-
         print(result_dict)
 
         return result_dict
 
     def getUserDetailsByUserPhone(phone):
-        cluster = Cluster(cloud=cloud_config)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
+        # Set up the connection details for the Cassandra cluster
+        session = cassandra_manager.session
 
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.user WHERE phone=? ALLOW FILTERING"
@@ -211,18 +156,11 @@ class DBFunctions():
         for row in result_set:
             print(row)
 
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
-
         return result_set
 
     def getUserDetailsByUserGovtId(govtId):
-        cluster = Cluster(cloud=cloud_config)
-
-        # Connect to the Cassandra cluster and create a session
-        session = cluster.connect()
-
+        # Set up the connection details for the Cassandra cluster
+        session = cassandra_manager.session
         # Execute a simple CQL query
         query = "SELECT * FROM Bisi.user WHERE aadharnumber=? ALLOW FILTERING"
         # Prepare the statement
@@ -233,10 +171,6 @@ class DBFunctions():
         # Process the result set...
         for row in result_set:
             print(row)
-
-        # Clean up the session and cluster objects
-        session.shutdown()
-        cluster.shutdown()
 
         return result_set
 
