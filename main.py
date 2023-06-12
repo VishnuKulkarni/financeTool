@@ -1,19 +1,19 @@
-from PyQt5.QtGui import QFont, QIcon
 from qtpy.QtWidgets import QApplication, QMainWindow, QGridLayout, QWidget
 from partition1 import Partition1
 from partition2 import Partition2
 from partition3 import Partition3
 from partition4 import Partition4
+from cassandra_manager import cassandra_manager
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Connect to Cassandra
+        cassandra_manager.connect()
         # Set main window title and size
-        self.setWindowTitle("Shri Sai Prasanna - Finance & Auto Leasing Company ")
-        # Set the window icon
-        icon = QIcon("icon.jpg")  # Replace "path/to/icon.png" with the actual path to your icon file
-        self.setWindowIcon(icon)
+        self.setWindowTitle('Large GUI')
         self.setFixedSize(1700, 900)
 
         # Create grid layout for partitions
@@ -34,6 +34,10 @@ class MainWindow(QMainWindow):
 
         # Set main window central widget
         self.setCentralWidget(self.central_widget)
+
+# When your app is about to exit
+#cassandra_manager.close()
+        
 
 if __name__ == '__main__':
     app = QApplication([])
