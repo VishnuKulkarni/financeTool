@@ -1,6 +1,6 @@
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QDialog, QScrollArea
-from qtpy.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QFrame, QPushButton, QTextEdit, QCheckBox, QLineEdit, QComboBox
 import common
 from partition2 import Partition2
 from partition3 import Partition3
@@ -30,6 +30,13 @@ class Partition1(QVBoxLayout):
         self.button1 = QPushButton('Connect')
         self.button1.setStyleSheet('QPushButton { background-color: gray; }')
         self.button1.clicked.connect(self.Connect)
+
+        # Create QLabel widget and set its pixmap to the image you want to display
+        image_label = QLabel()
+        image_pixmap = QPixmap('C:/Users/jsrir/Downloads/financeTool-master/icon.jpg')
+        # Set maximum height and width of the image
+        image_pixmap = image_pixmap.scaled(400, 200)
+        image_label.setPixmap(image_pixmap)
 
         #self.checkbox = QCheckBox('Checkbox')
         #self.textinput = QLineEdit()
@@ -63,6 +70,7 @@ class Partition1(QVBoxLayout):
 
         # Add button, checkbox, text input, dropdown menu, and text display area to partition layout
         self.addWidget(self.label)
+        self.addWidget(image_label)
         self.addWidget(self.button1)
 
         self.addWidget(self.line)
