@@ -33,7 +33,6 @@ class DBFunctions():
         # Set up the connection details for the Cassandra cluster
         session = cassandra_manager.session
 
-
         # Execute a simple CQL query
         query = "SELECT bisiPplList FROM Bisi.bisi WHERE bisiName=? ALLOW FILTERING"
         # Prepare the statement
@@ -44,8 +43,6 @@ class DBFunctions():
         for row in result1:
             cassandra_list = row.bisippllist
             python_list.extend(cassandra_list)        
-       
-       
 
         return python_list
 
@@ -80,7 +77,6 @@ class DBFunctions():
                 'bisiCommisionHistoryData': structured_dict,
             }
             result_dict.append(row_dict)
-        
 
         return result_dict
     
@@ -107,7 +103,6 @@ class DBFunctions():
                 structured_dict[key] = value
 
         print(structured_dict)
-
         return structured_dict
 
     def getUserDetailsByUserNameAndBisiName(personName, bisiName):

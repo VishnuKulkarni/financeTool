@@ -60,11 +60,9 @@ class Partition2(QVBoxLayout):
             # SAL : call the 'ListOfPll' api here for specific bisi
         else:
             pplList = ['Not nnected']  # VK : default list when not connected to db. Think over it
-
         # Clear the current items in the ppl list  drop-down menu
         self.dropdown_ppl.clear()
         self.dropdown_ppl.addItems(pplList)
-
         return pplList
 
     def DisplayPersonDetails(self):

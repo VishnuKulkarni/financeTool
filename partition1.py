@@ -39,7 +39,7 @@ class Partition1(QVBoxLayout):
         self.dropdown.addItems(self.GetBisiList())
 
         self.selected_option = self.dropdown.currentText()
-        self.dropdown.activated.connect(self.GetNameOfBisiSelected)
+        self.dropdown.activated.connect(self.GetNameOfBisiSelectedAndUpdatePplDropdown)
 
         # Create line separator
         self.line = QFrame()
@@ -101,8 +101,6 @@ class Partition1(QVBoxLayout):
         self.partition4.dropdown_partion4.clear()
         self.partition4.dropdown_partion4.addItems(self.GetBisiList())
 
-       
-
     def GetBisiList(self):
         if common.CONNECTED:
             bisilist = DBFunctions.getAllBisisList() # SAL : call the 'ListOfBisi' api here
@@ -110,12 +108,12 @@ class Partition1(QVBoxLayout):
             bisilist = ['Not Connected'] #VK : default list when not connected to db. Think over it
         return bisilist
 
-    def GetNameOfBisiSelected(self):
+    def GetNameOfBisiSelectedAndUpdatePplDropdown(self):
         bisiName = self.dropdown.currentText()
         self.partition2.GetPplList(bisiName)
         bisi_dict = DBFunctions.getBisiDetailsByBisiName(bisiName)
-        print(type(bisi_dict))
-        #DBFunctions.getBisiHistory(bisiName)
+        bisiHistory = DBFunctions.getBisiHistory(bisiName)
+        print(bisiHistory)
 
         if bisi_dict:
             self.textdisplay.append(f"BC Name: {bisi_dict[0].get('bisiName', '')}")
@@ -128,9 +126,7 @@ class Partition1(QVBoxLayout):
             self.textdisplay.append(f" DETAILS OF ALL THE MONTHS TILL NOW ")
             self.textdisplay.append(f"------------------------------------------------------------------")
         else:
-            self.textdisplay.append("Error: Failed to retrieve Bisi details")
-
-
+            self.textdisplay.append("Error: Failed to retrieve B.C. details")
 
     def ClearTextDisplay(self):
         self.textdisplay.clear()

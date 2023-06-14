@@ -9,7 +9,6 @@ from cassandra_manager import cassandra_manager
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
         # Connect to Cassandra
         cassandra_manager.connect()
         # Set main window title and size
@@ -24,10 +23,11 @@ class MainWindow(QMainWindow):
         partition2 = Partition2()
         partition3 = Partition3()
         partition4 = Partition4()
+
         self.grid.addLayout(partition2, 0, 1)
         self.grid.addLayout(Partition1(partition2, partition4), 0, 0)
-        self.grid.addLayout(Partition3(), 0, 2)
-        self.grid.addLayout(Partition4(), 0,3)
+        self.grid.addLayout(partition3, 0, 2)
+        self.grid.addLayout(partition4, 0,3)
 
         # Create central widget and set grid layout
         self.central_widget = QWidget()
@@ -38,7 +38,6 @@ class MainWindow(QMainWindow):
 
 # When your app is about to exit
 #cassandra_manager.close()
-        
 
 if __name__ == '__main__':
     app = QApplication([])

@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QMessageBox
 
 CONNECTED = False
 
-
 def DisplayInfoPopUp(self, msg):
     # Create a QMessageBox with the information message
 
